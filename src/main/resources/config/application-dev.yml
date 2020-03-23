@@ -48,6 +48,7 @@ spring:
     url: jdbc:postgresql://db:5432/diucon
     username: diucon
     password:
+
     hikari:
       poolName: Hikari
       auto-commit: false

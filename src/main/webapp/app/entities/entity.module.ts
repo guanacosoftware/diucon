@@ -36,4 +36,4 @@ import { RouterModule } from '@angular/router';
     ])
   ]
 })
-export class DiuconEntityModule {}
+export class DiuconEntityModule { }
