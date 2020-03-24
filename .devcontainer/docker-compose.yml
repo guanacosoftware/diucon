@@ -1,0 +1,22 @@
+version: "2"
+services:
+  app:
+    build: "."
+    volumes:
+      - "..:/workspace:cached"
+      - ~/.ssh:/home/jhipster/.ssh:ro
+    ports:
+      - "9000:9000"
+      - "8080:8080"
+      - "3001:3001"
+      - "9060:9060"
+      - "9001:9001"
+      - "31415:31415"
+  db:
+    extends:
+      file: "../src/main/docker/postgresql.yml"
+      service: diucon-postgresql
+  registry:
+    extends:
+      file: "../src/main/docker/jhipster-registry.yml"
+      service: jhipster-registry
