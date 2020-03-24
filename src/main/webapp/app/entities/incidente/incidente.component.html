@@ -1,0 +1,109 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="diuconApp.incidente.home.title">Incidentes</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-incidente" [routerLink]="['/incidente/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="diuconApp.incidente.home.createLabel">
+            Create a new Incidente
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="incidentes?.length === 0">
+        <span jhiTranslate="diuconApp.incidente.home.notFound">No incidentes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="incidentes?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fecha"><span jhiTranslate="diuconApp.incidente.fecha">Fecha</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cuerpo"><span jhiTranslate="diuconApp.incidente.cuerpo">Cuerpo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="estado"><span jhiTranslate="diuconApp.incidente.estado">Estado</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="localizacion"><span jhiTranslate="diuconApp.incidente.localizacion">Localizacion</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="latitud"><span jhiTranslate="diuconApp.incidente.latitud">Latitud</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="longitud"><span jhiTranslate="diuconApp.incidente.longitud">Longitud</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fechaResolucion"><span jhiTranslate="diuconApp.incidente.fechaResolucion">Fecha Resolucion</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="fechaCierre"><span jhiTranslate="diuconApp.incidente.fechaCierre">Fecha Cierre</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="email"><span jhiTranslate="diuconApp.incidente.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="categoriaNombre"><span jhiTranslate="diuconApp.incidente.categoria">Categoria</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="subcategoriaNombre"><span jhiTranslate="diuconApp.incidente.subcategoria">Subcategoria</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="operadorLogin"><span jhiTranslate="diuconApp.incidente.operador">Operador</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="responsableNombreCompleto"><span jhiTranslate="diuconApp.incidente.responsable">Responsable</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let incidente of incidentes ;trackBy: trackId">
+                    <td><a [routerLink]="['/incidente', incidente.id, 'view']">{{ incidente.id }}</a></td>
+                    <td>{{ incidente.fecha | date:'medium' }}</td>
+                    <td>{{ incidente.cuerpo }}</td>
+                    <td jhiTranslate="{{ 'diuconApp.Estado.' + incidente.estado }}">{{ incidente.estado }}</td>
+                    <td>{{ incidente.localizacion }}</td>
+                    <td>{{ incidente.latitud }}</td>
+                    <td>{{ incidente.longitud }}</td>
+                    <td>{{ incidente.fechaResolucion | date:'mediumDate' }}</td>
+                    <td>{{ incidente.fechaCierre | date:'mediumDate' }}</td>
+                    <td>{{ incidente.email }}</td>
+                    <td>
+                        <div *ngIf="incidente.categoriaId">
+                            <a [routerLink]="['/categoria', incidente.categoriaId , 'view']" >{{ incidente.categoriaNombre }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="incidente.subcategoriaId">
+                            <a [routerLink]="['/sub-categoria', incidente.subcategoriaId , 'view']" >{{ incidente.subcategoriaNombre }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        {{ incidente.operadorLogin }}
+                    </td>
+                    <td>
+                        <div *ngIf="incidente.responsableId">
+                            <a [routerLink]="['/responsable', incidente.responsableId , 'view']" >{{ incidente.responsableNombreCompleto }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/incidente', incidente.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/incidente', incidente.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(incidente)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="incidentes?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

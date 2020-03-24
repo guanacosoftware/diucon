@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="responsable">
+            <h2><span jhiTranslate="diuconApp.responsable.detail.title">Responsable</span> {{ responsable.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="diuconApp.responsable.nombreCompleto">Nombre Completo</span></dt>
+                <dd>
+                    <span>{{ responsable.nombreCompleto }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.telefono">Telefono</span></dt>
+                <dd>
+                    <span>{{ responsable.telefono }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.fechaNacimiento">Fecha Nacimiento</span></dt>
+                <dd>
+                    <span>{{ responsable.fechaNacimiento }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.dni">Dni</span></dt>
+                <dd>
+                    <span>{{ responsable.dni }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.domicilio">Domicilio</span></dt>
+                <dd>
+                    <span>{{ responsable.domicilio }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.latitud">Latitud</span></dt>
+                <dd>
+                    <span>{{ responsable.latitud }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.longitud">Longitud</span></dt>
+                <dd>
+                    <span>{{ responsable.longitud }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.profesional">Profesional</span></dt>
+                <dd>
+                    <span>{{ responsable.profesional }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.estudiante">Estudiante</span></dt>
+                <dd>
+                    <span>{{ responsable.estudiante }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.trabajador">Trabajador</span></dt>
+                <dd>
+                    <span>{{ responsable.trabajador }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.usuario">Usuario</span></dt>
+                <dd>
+                    {{ responsable.usuarioLogin }}
+                </dd>
+                <dt><span jhiTranslate="diuconApp.responsable.subcategorias">Subcategorias</span></dt>
+                <dd>
+                    <span *ngFor="let subcategorias of responsable.subcategorias; let last = last">
+                        <a [routerLink]="['/sub-categoria', subcategorias?.id, 'view']">{{ subcategorias.nombre }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/responsable', responsable.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

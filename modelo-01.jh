@@ -1,0 +1,84 @@
+enum Estado {
+    CREADA, ASIGNADA, EN_CURSO, RESUELTA, CERRADA
+}
+entity Categoria{
+    nombre String required
+    observaciones TextBlob
+}
+entity SubCategoria{
+    nombre String required
+    observaciones TextBlob
+}
+entity Incidente {
+    fecha Instant required
+    cuerpo TextBlob required
+    estado Estado required
+    localizacion String // Geolocalización del incidente. Se autocompletará utilizando Google Places API
+    latitud Double  // Latitud del incidente
+    longitud Double // Longitud del incidente
+    fechaResolucion LocalDate   // Fecha en que se resolvió la incidencia
+    fechaCierre LocalDate // Fecha en que se cerró la incidencia
+    email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) // email al que se enviarán notificaciones de los cambios de estado
+}
+// Este será el historial de cambios de estado de iun Incidente
+entity HistorialEstado {
+    fecha Instant required
+    estado Estado
+}
+entity Plantilla {
+    nombre String required
+    cuerpo TextBlob required
+}
+entity Comentario {
+    cuerpo TextBlob required
+}
+entity Responsable {
+    nombreCompleto String required
+    telefono String required
+    fechaNacimiento LocalDate
+    dni Long min(0) max(99999999)
+    domicilio String required   // Se autocompletará utilizando Google Places API
+    latitud Double
+    longitud Double
+    profesional Boolean
+    estudiante Boolean
+    trabajador Boolean
+}
+/**
+ * One to many relationship.
+ */
+relationship OneToMany {
+    Categoria {subcategorias(nombre)} to SubCategoria{categia(nombre)}
+    Incidente {comentarios} to Comentario {incidente}
+    Incidente {historial(estado)} to HistorialEstado {incidente}
+}
+/**
+ * Many to one relationship.
+ */
+relationship ManyToOne {
+    Comentario {usuario(login)} to User
+    Incidente {categoria(nombre)} to Categoria
+    Incidente {subcategoria(nombre)} to SubCategoria
+    Incidente {operador(login)} to User
+    Incidente {responsable(nombreCompleto)} to Responsable
+    HistorialEstado {usuario(login)} to User
+}
+/**
+ * One to one relationship.
+ */
+relationship OneToOne {
+    Responsable{usuario(login)} to User{responsable(nombreCompleto)}
+}
+/**
+ * Many to many relationship.
+ */
+relationship ManyToMany {
+    Responsable {subcategorias(nombre)} to SubCategoria {responsables(nombreCompleto)}
+    Plantilla {subcategorias(nombre)} to SubCategoria {plantillas(nombre)}
+}
+paginate Incidente, Responsable with pagination
+// enable DTO for the entity with Mapstruct
+dto * with mapstruct
+// Set service options to all
+service all with serviceImpl
+filter *

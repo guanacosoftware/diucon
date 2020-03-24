@@ -45,6 +45,20 @@ public class CacheConfiguration {
             createCache(cm, ar.com.guanaco.diucon.domain.User.class.getName());
             createCache(cm, ar.com.guanaco.diucon.domain.Authority.class.getName());
             createCache(cm, ar.com.guanaco.diucon.domain.User.class.getName() + ".authorities");
+            createCache(cm, ar.com.guanaco.diucon.domain.Categoria.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Categoria.class.getName() + ".subcategorias");
+            createCache(cm, ar.com.guanaco.diucon.domain.SubCategoria.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.SubCategoria.class.getName() + ".responsables");
+            createCache(cm, ar.com.guanaco.diucon.domain.SubCategoria.class.getName() + ".plantillas");
+            createCache(cm, ar.com.guanaco.diucon.domain.Incidente.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Incidente.class.getName() + ".comentarios");
+            createCache(cm, ar.com.guanaco.diucon.domain.Incidente.class.getName() + ".historials");
+            createCache(cm, ar.com.guanaco.diucon.domain.HistorialEstado.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Plantilla.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Plantilla.class.getName() + ".subcategorias");
+            createCache(cm, ar.com.guanaco.diucon.domain.Comentario.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Responsable.class.getName());
+            createCache(cm, ar.com.guanaco.diucon.domain.Responsable.class.getName() + ".subcategorias");
             // jhipster-needle-ehcache-add-entry
         };
     }

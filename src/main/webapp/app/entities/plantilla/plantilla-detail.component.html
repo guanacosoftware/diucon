@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="plantilla">
+            <h2><span jhiTranslate="diuconApp.plantilla.detail.title">Plantilla</span> {{ plantilla.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="diuconApp.plantilla.nombre">Nombre</span></dt>
+                <dd>
+                    <span>{{ plantilla.nombre }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.plantilla.cuerpo">Cuerpo</span></dt>
+                <dd>
+                    <span>{{ plantilla.cuerpo }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.plantilla.subcategorias">Subcategorias</span></dt>
+                <dd>
+                    <span *ngFor="let subcategorias of plantilla.subcategorias; let last = last">
+                        <a [routerLink]="['/sub-categoria', subcategorias?.id, 'view']">{{ subcategorias.nombre }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/plantilla', plantilla.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

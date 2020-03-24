@@ -1,0 +1,11 @@
+id;fecha;cuerpo;estado;localizacion;latitud;longitud;fecha_resolucion;fecha_cierre;email
+1;2020-03-24T12:40:47;../fake-data/blob/hipster.txt;RESUELTA;Awesome Concrete Chair;30093;64298;2020-03-24;2020-03-24;"O2f0ib@`0R.]rs"
+2;2020-03-24T12:25:52;../fake-data/blob/hipster.txt;RESUELTA;24 hour Fall;48152;92248;2020-03-24;2020-03-24;"SaY@D.f"
+3;2020-03-24T00:45:52;../fake-data/blob/hipster.txt;CREADA;open-source ADP;23957;234;2020-03-24;2020-03-24;"yL@k$zIe9.$_.|y8"
+4;2020-03-24T12:17:23;../fake-data/blob/hipster.txt;CERRADA;Lempira;72078;4207;2020-03-23;2020-03-24;"%sROow@T.(qyB0K"
+5;2020-03-24T09:23:36;../fake-data/blob/hipster.txt;ASIGNADA;Senior Designer;52529;42462;2020-03-24;2020-03-24;"e^:t@_.Ma~cE("
+6;2020-03-24T14:30:15;../fake-data/blob/hipster.txt;RESUELTA;withdrawal;72184;17987;2020-03-24;2020-03-24;"qvl7@gJkk.v7"
+7;2020-03-24T00:35:34;../fake-data/blob/hipster.txt;RESUELTA;strategic invoice Personal Loan Account;68785;29742;2020-03-24;2020-03-24;"ae{},@n=.Ndue0"
+8;2020-03-24T08:55:55;../fake-data/blob/hipster.txt;EN_CURSO;Chicken application sky blue;44957;83393;2020-03-24;2020-03-24;"$a@KK(Ls.dS"
+9;2020-03-24T11:56:42;../fake-data/blob/hipster.txt;EN_CURSO;Computers azure Island;72115;94743;2020-03-24;2020-03-24;"ea)@w.le"
+10;2020-03-23T22:59:56;../fake-data/blob/hipster.txt;CERRADA;actuating deposit;18218;77285;2020-03-24;2020-03-24;"D@0C*:>2.EIX"

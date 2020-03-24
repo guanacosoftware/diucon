@@ -1,0 +1,24 @@
+{
+  "diuconApp": {
+    "plantilla": {
+      "home": {
+        "title": "Plantillas",
+        "createLabel": "Crear nuevo Plantilla",
+        "createOrEditLabel": "Crear o editar Plantilla",
+        "notFound": "Ningún Plantillas encontrado"
+      },
+      "created": "Un nuevo Plantilla ha sido creado con el identificador {{ param }}",
+      "updated": "Un Plantilla ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Plantilla ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Plantilla {{ id }}?"
+      },
+      "detail": {
+        "title": "Plantilla"
+      },
+      "nombre": "Nombre",
+      "cuerpo": "Cuerpo",
+      "subcategorias": "Subcategorias"
+    }
+  }
+}

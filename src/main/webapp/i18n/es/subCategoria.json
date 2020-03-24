@@ -1,0 +1,26 @@
+{
+  "diuconApp": {
+    "subCategoria": {
+      "home": {
+        "title": "Sub Categorias",
+        "createLabel": "Crear nuevo Sub Categoria",
+        "createOrEditLabel": "Crear o editar Sub Categoria",
+        "notFound": "Ningún Sub Categorias encontrado"
+      },
+      "created": "Un nuevo Sub Categoria ha sido creado con el identificador {{ param }}",
+      "updated": "Un Sub Categoria ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Sub Categoria ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Sub Categoria {{ id }}?"
+      },
+      "detail": {
+        "title": "Sub Categoria"
+      },
+      "nombre": "Nombre",
+      "observaciones": "Observaciones",
+      "categia": "Categia",
+      "responsables": "Responsables",
+      "plantillas": "Plantillas"
+    }
+  }
+}

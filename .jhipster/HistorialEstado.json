@@ -1,0 +1,44 @@
+{
+    "name": "HistorialEstado",
+    "fields": [
+        {
+            "fieldName": "fecha",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "Estado",
+            "fieldValues": "CREADA,ASIGNADA,EN_CURSO,RESUELTA,CERRADA"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "historialEstado",
+            "relationshipName": "usuario",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "incidente",
+            "otherEntityRelationshipName": "historial",
+            "relationshipName": "incidente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200324224700",
+    "entityTableName": "historial_estado",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

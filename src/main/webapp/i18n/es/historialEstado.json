@@ -1,0 +1,25 @@
+{
+  "diuconApp": {
+    "historialEstado": {
+      "home": {
+        "title": "Historial Estados",
+        "createLabel": "Crear nuevo Historial Estado",
+        "createOrEditLabel": "Crear o editar Historial Estado",
+        "notFound": "Ningún Historial Estados encontrado"
+      },
+      "created": "Un nuevo Historial Estado ha sido creado con el identificador {{ param }}",
+      "updated": "Un Historial Estado ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Historial Estado ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Historial Estado {{ id }}?"
+      },
+      "detail": {
+        "title": "Historial Estado"
+      },
+      "fecha": "Fecha",
+      "estado": "Estado",
+      "usuario": "Usuario",
+      "incidente": "Incidente"
+    }
+  }
+}
