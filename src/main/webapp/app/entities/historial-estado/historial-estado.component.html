@@ -1,0 +1,73 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="diuconApp.historialEstado.home.title">Historial Estados</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-historial-estado" [routerLink]="['/historial-estado/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="diuconApp.historialEstado.home.createLabel">
+            Create a new Historial Estado
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="historialEstados?.length === 0">
+        <span jhiTranslate="diuconApp.historialEstado.home.notFound">No historialEstados found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="historialEstados?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.historialEstado.fecha">Fecha</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.historialEstado.estado">Estado</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.historialEstado.usuario">Usuario</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.historialEstado.incidente">Incidente</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let historialEstado of historialEstados ;trackBy: trackId">
+                    <td><a [routerLink]="['/historial-estado', historialEstado.id, 'view']">{{ historialEstado.id }}</a></td>
+                    <td>{{ historialEstado.fecha | date:'medium' }}</td>
+                    <td jhiTranslate="{{ 'diuconApp.Estado.' + historialEstado.estado }}">{{ historialEstado.estado }}</td>
+                    <td>
+                        {{ historialEstado.usuarioLogin }}
+                    </td>
+                    <td>
+                        <div *ngIf="historialEstado.incidenteId">
+                            <a [routerLink]="['/incidente', historialEstado.incidenteId , 'view']" >{{ historialEstado.incidenteId }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/historial-estado', historialEstado.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/historial-estado', historialEstado.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(historialEstado)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

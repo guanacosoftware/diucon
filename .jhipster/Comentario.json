@@ -1,0 +1,40 @@
+{
+    "name": "Comentario",
+    "fields": [
+        {
+            "fieldName": "cuerpo",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "comentario",
+            "relationshipName": "usuario",
+            "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "incidente",
+            "otherEntityRelationshipName": "comentarios",
+            "relationshipName": "incidente",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200324224900",
+    "entityTableName": "comentario",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

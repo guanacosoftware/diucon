@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <!--
+        Added the constraints for entity Responsable.
+    -->
+    <changeSet id="20200324225000-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="usuario_id"
+                                 baseTableName="responsable"
+                                 constraintName="fk_responsable_usuario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsable_id"
+                                 baseTableName="responsable_subcategorias"
+                                 constraintName="fk_responsable_subcategorias_responsable_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsable"/>
+
+        <addForeignKeyConstraint baseColumnNames="subcategorias_id"
+                                 baseTableName="responsable_subcategorias"
+                                 constraintName="fk_responsable_subcategorias_subcategorias_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sub_categoria"/>
+        
+    </changeSet>
+</databaseChangeLog>

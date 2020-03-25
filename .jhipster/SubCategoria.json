@@ -1,0 +1,51 @@
+{
+  "name": "SubCategoria",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "observaciones",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "categoria",
+      "otherEntityRelationshipName": "subcategorias",
+      "relationshipName": "categoria",
+      "otherEntityField": "nombre"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "responsable",
+      "otherEntityRelationshipName": "subcategorias",
+      "relationshipName": "responsables",
+      "otherEntityField": "nombreCompleto",
+      "ownerSide": false
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "plantilla",
+      "otherEntityRelationshipName": "subcategorias",
+      "relationshipName": "plantillas",
+      "otherEntityField": "nombre",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20200324224500",
+  "entityTableName": "sub_categoria",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
