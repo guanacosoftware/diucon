@@ -1,19 +1,30 @@
 package ar.com.guanaco.diucon.domain;
 
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import ar.com.guanaco.diucon.domain.enumeration.Estado;
 
@@ -36,11 +47,15 @@ public class Incidente implements Serializable {
     @Column(name = "fecha", nullable = false)
     private Instant fecha;
 
+    @NotNull
+    @Column(name = "resumen", nullable = false)
+    private String resumen;
+
     
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    @Column(name = "cuerpo", nullable = false)
-    private String cuerpo;
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -57,10 +72,10 @@ public class Incidente implements Serializable {
     private Double longitud;
 
     @Column(name = "fecha_resolucion")
-    private LocalDate fechaResolucion;
+    private Instant fechaResolucion;
 
     @Column(name = "fecha_cierre")
-    private LocalDate fechaCierre;
+    private Instant fechaCierre;
 
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     @Column(name = "email")
@@ -75,11 +90,13 @@ public class Incidente implements Serializable {
     private Set<HistorialEstado> historials = new HashSet<>();
 
     @ManyToOne
+    @NotNull
     @JsonIgnoreProperties("incidentes")
     private Categoria categoria;
 
     @ManyToOne
     @JsonIgnoreProperties("incidentes")
+    @NotNull
     private SubCategoria subcategoria;
 
     @ManyToOne
@@ -112,17 +129,30 @@ public class Incidente implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getCuerpo() {
-        return cuerpo;
+    public String getResumen() {
+        return resumen;
     }
 
-    public Incidente cuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
+    public Incidente resumen(String resumen) {
+        this.resumen = resumen;
         return this;
     }
 
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Incidente descripcion(String descripcion) {
+        this.descripcion = descripcion;
+        return this;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Estado getEstado() {
@@ -177,29 +207,29 @@ public class Incidente implements Serializable {
         this.longitud = longitud;
     }
 
-    public LocalDate getFechaResolucion() {
+    public Instant getFechaResolucion() {
         return fechaResolucion;
     }
 
-    public Incidente fechaResolucion(LocalDate fechaResolucion) {
+    public Incidente fechaResolucion(Instant fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
         return this;
     }
 
-    public void setFechaResolucion(LocalDate fechaResolucion) {
+    public void setFechaResolucion(Instant fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
     }
 
-    public LocalDate getFechaCierre() {
+    public Instant getFechaCierre() {
         return fechaCierre;
     }
 
-    public Incidente fechaCierre(LocalDate fechaCierre) {
+    public Incidente fechaCierre(Instant fechaCierre) {
         this.fechaCierre = fechaCierre;
         return this;
     }
 
-    public void setFechaCierre(LocalDate fechaCierre) {
+    public void setFechaCierre(Instant fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
@@ -340,7 +370,8 @@ public class Incidente implements Serializable {
         return "Incidente{" +
             "id=" + getId() +
             ", fecha='" + getFecha() + "'" +
-            ", cuerpo='" + getCuerpo() + "'" +
+            ", resumen='" + getResumen() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             ", estado='" + getEstado() + "'" +
             ", localizacion='" + getLocalizacion() + "'" +
             ", latitud=" + getLatitud() +

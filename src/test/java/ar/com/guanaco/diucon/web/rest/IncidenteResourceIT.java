@@ -26,9 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -50,8 +48,11 @@ public class IncidenteResourceIT {
     private static final Instant DEFAULT_FECHA = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_CUERPO = "AAAAAAAAAA";
-    private static final String UPDATED_CUERPO = "BBBBBBBBBB";
+    private static final String DEFAULT_RESUMEN = "AAAAAAAAAA";
+    private static final String UPDATED_RESUMEN = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
     private static final Estado DEFAULT_ESTADO = Estado.CREADA;
     private static final Estado UPDATED_ESTADO = Estado.ASIGNADA;
@@ -67,16 +68,14 @@ public class IncidenteResourceIT {
     private static final Double UPDATED_LONGITUD = 2D;
     private static final Double SMALLER_LONGITUD = 1D - 1D;
 
-    private static final LocalDate DEFAULT_FECHA_RESOLUCION = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_FECHA_RESOLUCION = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_FECHA_RESOLUCION = LocalDate.ofEpochDay(-1L);
+    private static final Instant DEFAULT_FECHA_RESOLUCION = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_FECHA_RESOLUCION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final LocalDate DEFAULT_FECHA_CIERRE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_FECHA_CIERRE = LocalDate.now(ZoneId.systemDefault());
-    private static final LocalDate SMALLER_FECHA_CIERRE = LocalDate.ofEpochDay(-1L);
+    private static final Instant DEFAULT_FECHA_CIERRE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_FECHA_CIERRE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_EMAIL = "#(/p)@p*.!8";
-    private static final String UPDATED_EMAIL = "(y[1N@TpV\".jK`-q$";
+    private static final String DEFAULT_EMAIL = "/&PE:@5.cjrQA";
+    private static final String UPDATED_EMAIL = "CC$z@rA.3EH`N&";
 
     @Autowired
     private IncidenteRepository incidenteRepository;
@@ -107,7 +106,8 @@ public class IncidenteResourceIT {
     public static Incidente createEntity(EntityManager em) {
         Incidente incidente = new Incidente()
             .fecha(DEFAULT_FECHA)
-            .cuerpo(DEFAULT_CUERPO)
+            .resumen(DEFAULT_RESUMEN)
+            .descripcion(DEFAULT_DESCRIPCION)
             .estado(DEFAULT_ESTADO)
             .localizacion(DEFAULT_LOCALIZACION)
             .latitud(DEFAULT_LATITUD)
@@ -126,7 +126,8 @@ public class IncidenteResourceIT {
     public static Incidente createUpdatedEntity(EntityManager em) {
         Incidente incidente = new Incidente()
             .fecha(UPDATED_FECHA)
-            .cuerpo(UPDATED_CUERPO)
+            .resumen(UPDATED_RESUMEN)
+            .descripcion(UPDATED_DESCRIPCION)
             .estado(UPDATED_ESTADO)
             .localizacion(UPDATED_LOCALIZACION)
             .latitud(UPDATED_LATITUD)
@@ -159,7 +160,8 @@ public class IncidenteResourceIT {
         assertThat(incidenteList).hasSize(databaseSizeBeforeCreate + 1);
         Incidente testIncidente = incidenteList.get(incidenteList.size() - 1);
         assertThat(testIncidente.getFecha()).isEqualTo(DEFAULT_FECHA);
-        assertThat(testIncidente.getCuerpo()).isEqualTo(DEFAULT_CUERPO);
+        assertThat(testIncidente.getResumen()).isEqualTo(DEFAULT_RESUMEN);
+        assertThat(testIncidente.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
         assertThat(testIncidente.getEstado()).isEqualTo(DEFAULT_ESTADO);
         assertThat(testIncidente.getLocalizacion()).isEqualTo(DEFAULT_LOCALIZACION);
         assertThat(testIncidente.getLatitud()).isEqualTo(DEFAULT_LATITUD);
@@ -211,6 +213,25 @@ public class IncidenteResourceIT {
 
     @Test
     @Transactional
+    public void checkResumenIsRequired() throws Exception {
+        int databaseSizeBeforeTest = incidenteRepository.findAll().size();
+        // set the field null
+        incidente.setResumen(null);
+
+        // Create the Incidente, which fails.
+        IncidenteDTO incidenteDTO = incidenteMapper.toDto(incidente);
+
+        restIncidenteMockMvc.perform(post("/api/incidentes")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(incidenteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Incidente> incidenteList = incidenteRepository.findAll();
+        assertThat(incidenteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkEstadoIsRequired() throws Exception {
         int databaseSizeBeforeTest = incidenteRepository.findAll().size();
         // set the field null
@@ -240,7 +261,8 @@ public class IncidenteResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(incidente.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
-            .andExpect(jsonPath("$.[*].cuerpo").value(hasItem(DEFAULT_CUERPO.toString())))
+            .andExpect(jsonPath("$.[*].resumen").value(hasItem(DEFAULT_RESUMEN)))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION.toString())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].localizacion").value(hasItem(DEFAULT_LOCALIZACION)))
             .andExpect(jsonPath("$.[*].latitud").value(hasItem(DEFAULT_LATITUD.doubleValue())))
@@ -262,7 +284,8 @@ public class IncidenteResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(incidente.getId().intValue()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
-            .andExpect(jsonPath("$.cuerpo").value(DEFAULT_CUERPO.toString()))
+            .andExpect(jsonPath("$.resumen").value(DEFAULT_RESUMEN))
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION.toString()))
             .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()))
             .andExpect(jsonPath("$.localizacion").value(DEFAULT_LOCALIZACION))
             .andExpect(jsonPath("$.latitud").value(DEFAULT_LATITUD.doubleValue()))
@@ -343,6 +366,84 @@ public class IncidenteResourceIT {
         // Get all the incidenteList where fecha is null
         defaultIncidenteShouldNotBeFound("fecha.specified=false");
     }
+
+    @Test
+    @Transactional
+    public void getAllIncidentesByResumenIsEqualToSomething() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen equals to DEFAULT_RESUMEN
+        defaultIncidenteShouldBeFound("resumen.equals=" + DEFAULT_RESUMEN);
+
+        // Get all the incidenteList where resumen equals to UPDATED_RESUMEN
+        defaultIncidenteShouldNotBeFound("resumen.equals=" + UPDATED_RESUMEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIncidentesByResumenIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen not equals to DEFAULT_RESUMEN
+        defaultIncidenteShouldNotBeFound("resumen.notEquals=" + DEFAULT_RESUMEN);
+
+        // Get all the incidenteList where resumen not equals to UPDATED_RESUMEN
+        defaultIncidenteShouldBeFound("resumen.notEquals=" + UPDATED_RESUMEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIncidentesByResumenIsInShouldWork() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen in DEFAULT_RESUMEN or UPDATED_RESUMEN
+        defaultIncidenteShouldBeFound("resumen.in=" + DEFAULT_RESUMEN + "," + UPDATED_RESUMEN);
+
+        // Get all the incidenteList where resumen equals to UPDATED_RESUMEN
+        defaultIncidenteShouldNotBeFound("resumen.in=" + UPDATED_RESUMEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIncidentesByResumenIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen is not null
+        defaultIncidenteShouldBeFound("resumen.specified=true");
+
+        // Get all the incidenteList where resumen is null
+        defaultIncidenteShouldNotBeFound("resumen.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllIncidentesByResumenContainsSomething() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen contains DEFAULT_RESUMEN
+        defaultIncidenteShouldBeFound("resumen.contains=" + DEFAULT_RESUMEN);
+
+        // Get all the incidenteList where resumen contains UPDATED_RESUMEN
+        defaultIncidenteShouldNotBeFound("resumen.contains=" + UPDATED_RESUMEN);
+    }
+
+    @Test
+    @Transactional
+    public void getAllIncidentesByResumenNotContainsSomething() throws Exception {
+        // Initialize the database
+        incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where resumen does not contain DEFAULT_RESUMEN
+        defaultIncidenteShouldNotBeFound("resumen.doesNotContain=" + DEFAULT_RESUMEN);
+
+        // Get all the incidenteList where resumen does not contain UPDATED_RESUMEN
+        defaultIncidenteShouldBeFound("resumen.doesNotContain=" + UPDATED_RESUMEN);
+    }
+
 
     @Test
     @Transactional
@@ -738,59 +839,6 @@ public class IncidenteResourceIT {
 
     @Test
     @Transactional
-    public void getAllIncidentesByFechaResolucionIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaResolucion is greater than or equal to DEFAULT_FECHA_RESOLUCION
-        defaultIncidenteShouldBeFound("fechaResolucion.greaterThanOrEqual=" + DEFAULT_FECHA_RESOLUCION);
-
-        // Get all the incidenteList where fechaResolucion is greater than or equal to UPDATED_FECHA_RESOLUCION
-        defaultIncidenteShouldNotBeFound("fechaResolucion.greaterThanOrEqual=" + UPDATED_FECHA_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaResolucionIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaResolucion is less than or equal to DEFAULT_FECHA_RESOLUCION
-        defaultIncidenteShouldBeFound("fechaResolucion.lessThanOrEqual=" + DEFAULT_FECHA_RESOLUCION);
-
-        // Get all the incidenteList where fechaResolucion is less than or equal to SMALLER_FECHA_RESOLUCION
-        defaultIncidenteShouldNotBeFound("fechaResolucion.lessThanOrEqual=" + SMALLER_FECHA_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaResolucionIsLessThanSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaResolucion is less than DEFAULT_FECHA_RESOLUCION
-        defaultIncidenteShouldNotBeFound("fechaResolucion.lessThan=" + DEFAULT_FECHA_RESOLUCION);
-
-        // Get all the incidenteList where fechaResolucion is less than UPDATED_FECHA_RESOLUCION
-        defaultIncidenteShouldBeFound("fechaResolucion.lessThan=" + UPDATED_FECHA_RESOLUCION);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaResolucionIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaResolucion is greater than DEFAULT_FECHA_RESOLUCION
-        defaultIncidenteShouldNotBeFound("fechaResolucion.greaterThan=" + DEFAULT_FECHA_RESOLUCION);
-
-        // Get all the incidenteList where fechaResolucion is greater than SMALLER_FECHA_RESOLUCION
-        defaultIncidenteShouldBeFound("fechaResolucion.greaterThan=" + SMALLER_FECHA_RESOLUCION);
-    }
-
-
-    @Test
-    @Transactional
     public void getAllIncidentesByFechaCierreIsEqualToSomething() throws Exception {
         // Initialize the database
         incidenteRepository.saveAndFlush(incidente);
@@ -840,59 +888,6 @@ public class IncidenteResourceIT {
         // Get all the incidenteList where fechaCierre is null
         defaultIncidenteShouldNotBeFound("fechaCierre.specified=false");
     }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaCierreIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaCierre is greater than or equal to DEFAULT_FECHA_CIERRE
-        defaultIncidenteShouldBeFound("fechaCierre.greaterThanOrEqual=" + DEFAULT_FECHA_CIERRE);
-
-        // Get all the incidenteList where fechaCierre is greater than or equal to UPDATED_FECHA_CIERRE
-        defaultIncidenteShouldNotBeFound("fechaCierre.greaterThanOrEqual=" + UPDATED_FECHA_CIERRE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaCierreIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaCierre is less than or equal to DEFAULT_FECHA_CIERRE
-        defaultIncidenteShouldBeFound("fechaCierre.lessThanOrEqual=" + DEFAULT_FECHA_CIERRE);
-
-        // Get all the incidenteList where fechaCierre is less than or equal to SMALLER_FECHA_CIERRE
-        defaultIncidenteShouldNotBeFound("fechaCierre.lessThanOrEqual=" + SMALLER_FECHA_CIERRE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaCierreIsLessThanSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaCierre is less than DEFAULT_FECHA_CIERRE
-        defaultIncidenteShouldNotBeFound("fechaCierre.lessThan=" + DEFAULT_FECHA_CIERRE);
-
-        // Get all the incidenteList where fechaCierre is less than UPDATED_FECHA_CIERRE
-        defaultIncidenteShouldBeFound("fechaCierre.lessThan=" + UPDATED_FECHA_CIERRE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllIncidentesByFechaCierreIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        incidenteRepository.saveAndFlush(incidente);
-
-        // Get all the incidenteList where fechaCierre is greater than DEFAULT_FECHA_CIERRE
-        defaultIncidenteShouldNotBeFound("fechaCierre.greaterThan=" + DEFAULT_FECHA_CIERRE);
-
-        // Get all the incidenteList where fechaCierre is greater than SMALLER_FECHA_CIERRE
-        defaultIncidenteShouldBeFound("fechaCierre.greaterThan=" + SMALLER_FECHA_CIERRE);
-    }
-
 
     @Test
     @Transactional
@@ -1100,7 +1095,8 @@ public class IncidenteResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(incidente.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
-            .andExpect(jsonPath("$.[*].cuerpo").value(hasItem(DEFAULT_CUERPO.toString())))
+            .andExpect(jsonPath("$.[*].resumen").value(hasItem(DEFAULT_RESUMEN)))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION.toString())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].localizacion").value(hasItem(DEFAULT_LOCALIZACION)))
             .andExpect(jsonPath("$.[*].latitud").value(hasItem(DEFAULT_LATITUD.doubleValue())))
@@ -1156,7 +1152,8 @@ public class IncidenteResourceIT {
         em.detach(updatedIncidente);
         updatedIncidente
             .fecha(UPDATED_FECHA)
-            .cuerpo(UPDATED_CUERPO)
+            .resumen(UPDATED_RESUMEN)
+            .descripcion(UPDATED_DESCRIPCION)
             .estado(UPDATED_ESTADO)
             .localizacion(UPDATED_LOCALIZACION)
             .latitud(UPDATED_LATITUD)
@@ -1176,7 +1173,8 @@ public class IncidenteResourceIT {
         assertThat(incidenteList).hasSize(databaseSizeBeforeUpdate);
         Incidente testIncidente = incidenteList.get(incidenteList.size() - 1);
         assertThat(testIncidente.getFecha()).isEqualTo(UPDATED_FECHA);
-        assertThat(testIncidente.getCuerpo()).isEqualTo(UPDATED_CUERPO);
+        assertThat(testIncidente.getResumen()).isEqualTo(UPDATED_RESUMEN);
+        assertThat(testIncidente.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
         assertThat(testIncidente.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testIncidente.getLocalizacion()).isEqualTo(UPDATED_LOCALIZACION);
         assertThat(testIncidente.getLatitud()).isEqualTo(UPDATED_LATITUD);

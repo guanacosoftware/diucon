@@ -17,7 +17,8 @@
         "title": "Incidente"
       },
       "fecha": "Fecha",
-      "cuerpo": "Cuerpo",
+      "resumen": "Resumen",
+      "descripcion": "Descripcion",
       "estado": "Estado",
       "localizacion": "Localizacion",
       "latitud": "Latitud",

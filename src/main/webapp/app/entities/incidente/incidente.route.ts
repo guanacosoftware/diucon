@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
-import { Authority } from 'app/shared/constants/authority.constants';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from 'app/shared/constants/authority.constants';
 import { IIncidente, Incidente } from 'app/shared/model/incidente.model';
-import { IncidenteService } from './incidente.service';
-import { IncidenteComponent } from './incidente.component';
+import { JhiResolvePagingParams } from 'ng-jhipster';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { IncidenteDetailComponent } from './incidente-detail.component';
 import { IncidenteUpdateComponent } from './incidente-update.component';
+import { IncidenteComponent } from './incidente.component';
+import { IncidenteService } from './incidente.service';
 
 @Injectable({ providedIn: 'root' })
 export class IncidenteResolve implements Resolve<IIncidente> {
@@ -44,7 +43,7 @@ export const incidenteRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
       pageTitle: 'diuconApp.incidente.home.title'
     },
     canActivate: [UserRouteAccessService]

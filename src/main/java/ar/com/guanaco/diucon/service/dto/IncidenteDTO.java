@@ -1,7 +1,6 @@
 package ar.com.guanaco.diucon.service.dto;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -18,9 +17,12 @@ public class IncidenteDTO implements Serializable {
     @NotNull
     private Instant fecha;
 
+    @NotNull
+    private String resumen;
+
     
     @Lob
-    private String cuerpo;
+    private String descripcion;
 
     @NotNull
     private Estado estado;
@@ -31,9 +33,9 @@ public class IncidenteDTO implements Serializable {
 
     private Double longitud;
 
-    private LocalDate fechaResolucion;
+    private Instant fechaResolucion;
 
-    private LocalDate fechaCierre;
+    private Instant fechaCierre;
 
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")
     private String email;
@@ -71,12 +73,20 @@ public class IncidenteDTO implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getCuerpo() {
-        return cuerpo;
+    public String getResumen() {
+        return resumen;
     }
 
-    public void setCuerpo(String cuerpo) {
-        this.cuerpo = cuerpo;
+    public void setResumen(String resumen) {
+        this.resumen = resumen;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Estado getEstado() {
@@ -111,19 +121,19 @@ public class IncidenteDTO implements Serializable {
         this.longitud = longitud;
     }
 
-    public LocalDate getFechaResolucion() {
+    public Instant getFechaResolucion() {
         return fechaResolucion;
     }
 
-    public void setFechaResolucion(LocalDate fechaResolucion) {
+    public void setFechaResolucion(Instant fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
     }
 
-    public LocalDate getFechaCierre() {
+    public Instant getFechaCierre() {
         return fechaCierre;
     }
 
-    public void setFechaCierre(LocalDate fechaCierre) {
+    public void setFechaCierre(Instant fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
@@ -225,7 +235,8 @@ public class IncidenteDTO implements Serializable {
         return "IncidenteDTO{" +
             "id=" + getId() +
             ", fecha='" + getFecha() + "'" +
-            ", cuerpo='" + getCuerpo() + "'" +
+            ", resumen='" + getResumen() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             ", estado='" + getEstado() + "'" +
             ", localizacion='" + getLocalizacion() + "'" +
             ", latitud=" + getLatitud() +

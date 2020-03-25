@@ -9,7 +9,14 @@
             ]
         },
         {
-            "fieldName": "cuerpo",
+            "fieldName": "resumen",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "descripcion",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "text",
             "fieldValidateRules": [
@@ -38,11 +45,11 @@
         },
         {
             "fieldName": "fechaResolucion",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "fechaCierre",
-            "fieldType": "LocalDate"
+            "fieldType": "Instant"
         },
         {
             "fieldName": "email",

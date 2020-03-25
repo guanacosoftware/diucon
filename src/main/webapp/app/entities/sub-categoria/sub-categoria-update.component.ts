@@ -24,7 +24,7 @@ export class SubCategoriaUpdateComponent implements OnInit {
     id: [],
     nombre: [null, [Validators.required]],
     observaciones: [],
-    categiaId: []
+    categoriaId: []
   });
 
   constructor(
@@ -49,7 +49,7 @@ export class SubCategoriaUpdateComponent implements OnInit {
       id: subCategoria.id,
       nombre: subCategoria.nombre,
       observaciones: subCategoria.observaciones,
-      categiaId: subCategoria.categiaId
+      categoriaId: subCategoria.categoriaId
     });
   }
 
@@ -89,7 +89,7 @@ export class SubCategoriaUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
       observaciones: this.editForm.get(['observaciones'])!.value,
-      categiaId: this.editForm.get(['categiaId'])!.value
+      categoriaId: this.editForm.get(['categoriaId'])!.value
     };
   }
 

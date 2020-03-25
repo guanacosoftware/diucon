@@ -6,7 +6,8 @@ import { Estado } from 'app/shared/model/enumerations/estado.model';
 export interface IIncidente {
   id?: number;
   fecha?: Moment;
-  cuerpo?: any;
+  resumen?: string;
+  descripcion?: any;
   estado?: Estado;
   localizacion?: string;
   latitud?: number;
@@ -30,7 +31,8 @@ export class Incidente implements IIncidente {
   constructor(
     public id?: number,
     public fecha?: Moment,
-    public cuerpo?: any,
+    public resumen?: string,
+    public descripcion?: any,
     public estado?: Estado,
     public localizacion?: string,
     public latitud?: number,

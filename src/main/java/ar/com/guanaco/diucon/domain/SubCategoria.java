@@ -1,18 +1,27 @@
 package ar.com.guanaco.diucon.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A SubCategoria.
@@ -40,7 +49,7 @@ public class SubCategoria implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("subcategorias")
-    private Categoria categia;
+    private Categoria categoria;
 
     @ManyToMany(mappedBy = "subcategorias")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -52,7 +61,8 @@ public class SubCategoria implements Serializable {
     @JsonIgnore
     private Set<Plantilla> plantillas = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
+    // remove
     public Long getId() {
         return id;
     }
@@ -87,17 +97,17 @@ public class SubCategoria implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Categoria getCategia() {
-        return categia;
+    public Categoria getcategoria() {
+        return categoria;
     }
 
-    public SubCategoria categia(Categoria categoria) {
-        this.categia = categoria;
+    public SubCategoria categoria(Categoria categoria) {
+        this.categoria = categoria;
         return this;
     }
 
-    public void setCategia(Categoria categoria) {
-        this.categia = categoria;
+    public void setcategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public Set<Responsable> getResponsables() {
@@ -149,7 +159,8 @@ public class SubCategoria implements Serializable {
     public void setPlantillas(Set<Plantilla> plantillas) {
         this.plantillas = plantillas;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -169,10 +180,7 @@ public class SubCategoria implements Serializable {
 
     @Override
     public String toString() {
-        return "SubCategoria{" +
-            "id=" + getId() +
-            ", nombre='" + getNombre() + "'" +
-            ", observaciones='" + getObservaciones() + "'" +
-            "}";
+        return "SubCategoria{" + "id=" + getId() + ", nombre='" + getNombre() + "'" + ", observaciones='"
+                + getObservaciones() + "'" + "}";
     }
 }

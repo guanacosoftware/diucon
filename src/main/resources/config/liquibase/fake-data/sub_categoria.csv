@@ -1,11 +1,7 @@
-id;nombre;observaciones
-1;Sudanese Pound Soft iterate;../fake-data/blob/hipster.txt
-2;transparent;../fake-data/blob/hipster.txt
-3;synthesizing Customer;../fake-data/blob/hipster.txt
-4;interactive Forward;../fake-data/blob/hipster.txt
-5;Berkshire Gloves;../fake-data/blob/hipster.txt
-6;Money Market Account connecting British Indian Ocean Territory (Chagos Archipelago);../fake-data/blob/hipster.txt
-7;Shores;../fake-data/blob/hipster.txt
-8;cyan Engineer interactive;../fake-data/blob/hipster.txt
-9;Integrated Baby Dynamic;../fake-data/blob/hipster.txt
-10;invoice coherent Belgium;../fake-data/blob/hipster.txt
+id;categoria_id;nombre;observaciones
+1;1;Salud;Cuestiones relacionadas con Salud
+2;1;Mascotas;Cuestiones relacionadas con Mascotas
+3;1;Trámites;Cuestiones relacionadas con todo tipo de Trámites
+4;2;RRHH;Cuestiones relacionadas con Recursos Humanos
+5;2;Donaciones;Cuestiones relacionadas con Donaciones Recibidas/En trámite
+6;2;Necesidades;Cuestiones relacionadas con Necesidades

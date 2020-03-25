@@ -21,7 +21,7 @@
             <column name="observaciones" type="${clobType}">
                 <constraints nullable="true" />
             </column>
-            <column name="categia_id" type="bigint">
+            <column name="categoria_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
@@ -47,8 +47,9 @@
                   separator=";"
                   tableName="sub_categoria">
             <column name="id" type="numeric"/>
+            <column name="categoria_id" type="numeric"/>
             <column name="nombre" type="string"/>
-            <column name="observaciones" type="clob"/>
+            <column name="observaciones" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>
     </changeSet>

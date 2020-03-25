@@ -1,16 +1,23 @@
 package ar.com.guanaco.diucon.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A Categoria.
@@ -36,11 +43,12 @@ public class Categoria implements Serializable {
     @Column(name = "observaciones")
     private String observaciones;
 
-    @OneToMany(mappedBy = "categia")
+    @OneToMany(mappedBy = "categoria")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<SubCategoria> subcategorias = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
+    // remove
     public Long getId() {
         return id;
     }
@@ -86,20 +94,21 @@ public class Categoria implements Serializable {
 
     public Categoria addSubcategorias(SubCategoria subCategoria) {
         this.subcategorias.add(subCategoria);
-        subCategoria.setCategia(this);
+        subCategoria.setcategoria(this);
         return this;
     }
 
     public Categoria removeSubcategorias(SubCategoria subCategoria) {
         this.subcategorias.remove(subCategoria);
-        subCategoria.setCategia(null);
+        subCategoria.setcategoria(null);
         return this;
     }
 
     public void setSubcategorias(Set<SubCategoria> subCategorias) {
         this.subcategorias = subCategorias;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -119,10 +128,7 @@ public class Categoria implements Serializable {
 
     @Override
     public String toString() {
-        return "Categoria{" +
-            "id=" + getId() +
-            ", nombre='" + getNombre() + "'" +
-            ", observaciones='" + getObservaciones() + "'" +
-            "}";
+        return "Categoria{" + "id=" + getId() + ", nombre='" + getNombre() + "'" + ", observaciones='"
+                + getObservaciones() + "'" + "}";
     }
 }

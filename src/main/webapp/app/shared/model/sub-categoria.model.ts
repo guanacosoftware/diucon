@@ -5,8 +5,8 @@ export interface ISubCategoria {
   id?: number;
   nombre?: string;
   observaciones?: any;
-  categiaNombre?: string;
-  categiaId?: number;
+  categoriaNombre?: string;
+  categoriaId?: number;
   responsables?: IResponsable[];
   plantillas?: IPlantilla[];
 }
@@ -16,8 +16,8 @@ export class SubCategoria implements ISubCategoria {
     public id?: number,
     public nombre?: string,
     public observaciones?: any,
-    public categiaNombre?: string,
-    public categiaId?: number,
+    public categoriaNombre?: string,
+    public categoriaId?: number,
     public responsables?: IResponsable[],
     public plantillas?: IPlantilla[]
   ) {}

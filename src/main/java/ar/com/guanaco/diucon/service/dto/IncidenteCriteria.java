@@ -12,7 +12,6 @@ import io.github.jhipster.service.filter.IntegerFilter;
 import io.github.jhipster.service.filter.LongFilter;
 import io.github.jhipster.service.filter.StringFilter;
 import io.github.jhipster.service.filter.InstantFilter;
-import io.github.jhipster.service.filter.LocalDateFilter;
 
 /**
  * Criteria class for the {@link ar.com.guanaco.diucon.domain.Incidente} entity. This class is used
@@ -49,6 +48,8 @@ public class IncidenteCriteria implements Serializable, Criteria {
 
     private InstantFilter fecha;
 
+    private StringFilter resumen;
+
     private EstadoFilter estado;
 
     private StringFilter localizacion;
@@ -57,9 +58,9 @@ public class IncidenteCriteria implements Serializable, Criteria {
 
     private DoubleFilter longitud;
 
-    private LocalDateFilter fechaResolucion;
+    private InstantFilter fechaResolucion;
 
-    private LocalDateFilter fechaCierre;
+    private InstantFilter fechaCierre;
 
     private StringFilter email;
 
@@ -81,6 +82,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
     public IncidenteCriteria(IncidenteCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.fecha = other.fecha == null ? null : other.fecha.copy();
+        this.resumen = other.resumen == null ? null : other.resumen.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
         this.localizacion = other.localizacion == null ? null : other.localizacion.copy();
         this.latitud = other.latitud == null ? null : other.latitud.copy();
@@ -117,6 +119,14 @@ public class IncidenteCriteria implements Serializable, Criteria {
         this.fecha = fecha;
     }
 
+    public StringFilter getResumen() {
+        return resumen;
+    }
+
+    public void setResumen(StringFilter resumen) {
+        this.resumen = resumen;
+    }
+
     public EstadoFilter getEstado() {
         return estado;
     }
@@ -149,19 +159,19 @@ public class IncidenteCriteria implements Serializable, Criteria {
         this.longitud = longitud;
     }
 
-    public LocalDateFilter getFechaResolucion() {
+    public InstantFilter getFechaResolucion() {
         return fechaResolucion;
     }
 
-    public void setFechaResolucion(LocalDateFilter fechaResolucion) {
+    public void setFechaResolucion(InstantFilter fechaResolucion) {
         this.fechaResolucion = fechaResolucion;
     }
 
-    public LocalDateFilter getFechaCierre() {
+    public InstantFilter getFechaCierre() {
         return fechaCierre;
     }
 
-    public void setFechaCierre(LocalDateFilter fechaCierre) {
+    public void setFechaCierre(InstantFilter fechaCierre) {
         this.fechaCierre = fechaCierre;
     }
 
@@ -234,6 +244,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return
             Objects.equals(id, that.id) &&
             Objects.equals(fecha, that.fecha) &&
+            Objects.equals(resumen, that.resumen) &&
             Objects.equals(estado, that.estado) &&
             Objects.equals(localizacion, that.localizacion) &&
             Objects.equals(latitud, that.latitud) &&
@@ -254,6 +265,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return Objects.hash(
         id,
         fecha,
+        resumen,
         estado,
         localizacion,
         latitud,
@@ -275,6 +287,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return "IncidenteCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
                 (fecha != null ? "fecha=" + fecha + ", " : "") +
+                (resumen != null ? "resumen=" + resumen + ", " : "") +
                 (estado != null ? "estado=" + estado + ", " : "") +
                 (localizacion != null ? "localizacion=" + localizacion + ", " : "") +
                 (latitud != null ? "latitud=" + latitud + ", " : "") +

@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-
-import { IIncidente, Incidente } from 'app/shared/model/incidente.model';
-import { IncidenteService } from './incidente.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { ICategoria } from 'app/shared/model/categoria.model';
-import { CategoriaService } from 'app/entities/categoria/categoria.service';
-import { ISubCategoria } from 'app/shared/model/sub-categoria.model';
-import { SubCategoriaService } from 'app/entities/sub-categoria/sub-categoria.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { IResponsable } from 'app/shared/model/responsable.model';
+import { CategoriaService } from 'app/entities/categoria/categoria.service';
 import { ResponsableService } from 'app/entities/responsable/responsable.service';
+import { SubCategoriaService } from 'app/entities/sub-categoria/sub-categoria.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { ICategoria } from 'app/shared/model/categoria.model';
+import { IIncidente, Incidente } from 'app/shared/model/incidente.model';
+import { IResponsable } from 'app/shared/model/responsable.model';
+import { ISubCategoria } from 'app/shared/model/sub-categoria.model';
+import * as moment from 'moment';
+import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
+import { Observable } from 'rxjs';
+import { IncidenteService } from './incidente.service';
 
 type SelectableEntity = ICategoria | ISubCategoria | IUser | IResponsable;
 
@@ -32,13 +31,12 @@ export class IncidenteUpdateComponent implements OnInit {
   subcategorias: ISubCategoria[] = [];
   users: IUser[] = [];
   responsables: IResponsable[] = [];
-  fechaResolucionDp: any;
-  fechaCierreDp: any;
 
   editForm = this.fb.group({
     id: [],
     fecha: [null, [Validators.required]],
-    cuerpo: [null, [Validators.required]],
+    resumen: [null, [Validators.required]],
+    descripcion: [null, [Validators.required]],
     estado: [null, [Validators.required]],
     localizacion: [],
     latitud: [],
@@ -46,8 +44,8 @@ export class IncidenteUpdateComponent implements OnInit {
     fechaResolucion: [],
     fechaCierre: [],
     email: [null, [Validators.pattern('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')]],
-    categoriaId: [],
-    subcategoriaId: [],
+    categoriaId: [null, [Validators.required]],
+    subcategoriaId: [null, [Validators.required]],
     operadorId: [],
     responsableId: []
   });
@@ -69,6 +67,8 @@ export class IncidenteUpdateComponent implements OnInit {
       if (!incidente.id) {
         const today = moment().startOf('day');
         incidente.fecha = today;
+        incidente.fechaResolucion = today;
+        incidente.fechaCierre = today;
       }
 
       this.updateForm(incidente);
@@ -87,13 +87,14 @@ export class IncidenteUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: incidente.id,
       fecha: incidente.fecha ? incidente.fecha.format(DATE_TIME_FORMAT) : null,
-      cuerpo: incidente.cuerpo,
+      resumen: incidente.resumen,
+      descripcion: incidente.descripcion,
       estado: incidente.estado,
       localizacion: incidente.localizacion,
       latitud: incidente.latitud,
       longitud: incidente.longitud,
-      fechaResolucion: incidente.fechaResolucion,
-      fechaCierre: incidente.fechaCierre,
+      fechaResolucion: incidente.fechaResolucion ? incidente.fechaResolucion.format(DATE_TIME_FORMAT) : null,
+      fechaCierre: incidente.fechaCierre ? incidente.fechaCierre.format(DATE_TIME_FORMAT) : null,
       email: incidente.email,
       categoriaId: incidente.categoriaId,
       subcategoriaId: incidente.subcategoriaId,
@@ -137,13 +138,18 @@ export class IncidenteUpdateComponent implements OnInit {
       ...new Incidente(),
       id: this.editForm.get(['id'])!.value,
       fecha: this.editForm.get(['fecha'])!.value ? moment(this.editForm.get(['fecha'])!.value, DATE_TIME_FORMAT) : undefined,
-      cuerpo: this.editForm.get(['cuerpo'])!.value,
+      resumen: this.editForm.get(['resumen'])!.value,
+      descripcion: this.editForm.get(['descripcion'])!.value,
       estado: this.editForm.get(['estado'])!.value,
       localizacion: this.editForm.get(['localizacion'])!.value,
       latitud: this.editForm.get(['latitud'])!.value,
       longitud: this.editForm.get(['longitud'])!.value,
-      fechaResolucion: this.editForm.get(['fechaResolucion'])!.value,
-      fechaCierre: this.editForm.get(['fechaCierre'])!.value,
+      fechaResolucion: this.editForm.get(['fechaResolucion'])!.value
+        ? moment(this.editForm.get(['fechaResolucion'])!.value, DATE_TIME_FORMAT)
+        : undefined,
+      fechaCierre: this.editForm.get(['fechaCierre'])!.value
+        ? moment(this.editForm.get(['fechaCierre'])!.value, DATE_TIME_FORMAT)
+        : undefined,
       email: this.editForm.get(['email'])!.value,
       categoriaId: this.editForm.get(['categoriaId'])!.value,
       subcategoriaId: this.editForm.get(['subcategoriaId'])!.value,

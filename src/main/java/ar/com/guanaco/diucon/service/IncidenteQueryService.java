@@ -94,6 +94,9 @@ public class IncidenteQueryService extends QueryService<Incidente> {
             if (criteria.getFecha() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFecha(), Incidente_.fecha));
             }
+            if (criteria.getResumen() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getResumen(), Incidente_.resumen));
+            }
             if (criteria.getEstado() != null) {
                 specification = specification.and(buildSpecification(criteria.getEstado(), Incidente_.estado));
             }

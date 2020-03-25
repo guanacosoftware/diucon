@@ -73,7 +73,8 @@ class IncidenteGatlingTest extends Simulation {
             .body(StringBody("""{
                 "id":null
                 , "fecha":"2020-01-01T00:00:00.000Z"
-                , "cuerpo":null
+                , "resumen":"SAMPLE_TEXT"
+                , "descripcion":null
                 , "estado":"CREADA"
                 , "localizacion":"SAMPLE_TEXT"
                 , "latitud":null

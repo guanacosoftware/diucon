@@ -29,12 +29,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.cuerpo" for="field_cuerpo">Cuerpo</label>
-                    <textarea class="form-control" name="cuerpo" id="field_cuerpo"
-                              formControlName="cuerpo"></textarea>
-                    <div *ngIf="editForm.get('cuerpo')!.invalid && (editForm.get('cuerpo')!.dirty || editForm.get('cuerpo')!.touched)">
+                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.resumen" for="field_resumen">Resumen</label>
+                    <input type="text" class="form-control" name="resumen" id="field_resumen"
+                           formControlName="resumen"/>
+                    <div *ngIf="editForm.get('resumen')!.invalid && (editForm.get('resumen')!.dirty || editForm.get('resumen')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('cuerpo')?.errors?.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('resumen')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.descripcion" for="field_descripcion">Descripcion</label>
+                    <textarea class="form-control" name="descripcion" id="field_descripcion"
+                              formControlName="descripcion"></textarea>
+                    <div *ngIf="editForm.get('descripcion')!.invalid && (editForm.get('descripcion')!.dirty || editForm.get('descripcion')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('descripcion')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
@@ -77,21 +89,15 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaResolucion" for="field_fechaResolucion">Fecha Resolucion</label>
-                    <div class="input-group">
-                        <input id="field_fechaResolucion" type="text" class="form-control" name="fechaResolucion" ngbDatepicker #fechaResolucionDp="ngbDatepicker" formControlName="fechaResolucion"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="fechaResolucionDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-                        </span>
+                    <div class="d-flex">
+                        <input id="field_fechaResolucion" type="datetime-local" class="form-control" name="fechaResolucion" formControlName="fechaResolucion" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaCierre" for="field_fechaCierre">Fecha Cierre</label>
-                    <div class="input-group">
-                        <input id="field_fechaCierre" type="text" class="form-control" name="fechaCierre" ngbDatepicker #fechaCierreDp="ngbDatepicker" formControlName="fechaCierre"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="fechaCierreDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-                        </span>
+                    <div class="d-flex">
+                        <input id="field_fechaCierre" type="datetime-local" class="form-control" name="fechaCierre" formControlName="fechaCierre" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
                 </div>
 

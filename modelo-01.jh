@@ -10,14 +10,15 @@ entity SubCategoria{
     observaciones TextBlob
 }
 entity Incidente {
-    fecha Instant required
-    cuerpo TextBlob required
+    fecha Instant required // Fecha de creación del incidente
+    resumen String required
+    descripcion TextBlob required
     estado Estado required
     localizacion String // Geolocalización del incidente. Se autocompletará utilizando Google Places API
     latitud Double  // Latitud del incidente
     longitud Double // Longitud del incidente
-    fechaResolucion LocalDate   // Fecha en que se resolvió la incidencia
-    fechaCierre LocalDate // Fecha en que se cerró la incidencia
+    fechaResolucion Instant   // Momento en que se resolvió la incidencia
+    fechaCierre Instant // Momento en que se cerró la incidencia
     email String pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/) // email al que se enviarán notificaciones de los cambios de estado
 }
 // Este será el historial de cambios de estado de iun Incidente
@@ -48,7 +49,7 @@ entity Responsable {
  * One to many relationship.
  */
 relationship OneToMany {
-    Categoria {subcategorias(nombre)} to SubCategoria{categia(nombre)}
+    Categoria {subcategorias(nombre)} to SubCategoria{categoria(nombre)}
     Incidente {comentarios} to Comentario {incidente}
     Incidente {historial(estado)} to HistorialEstado {incidente}
 }
