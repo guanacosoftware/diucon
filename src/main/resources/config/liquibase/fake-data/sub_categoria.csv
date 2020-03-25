@@ -1,0 +1,7 @@
+id;categoria_id;nombre;observaciones
+1;1;Salud;Cuestiones relacionadas con Salud
+2;1;Mascotas;Cuestiones relacionadas con Mascotas
+3;1;Trámites;Cuestiones relacionadas con todo tipo de Trámites
+4;2;RRHH;Cuestiones relacionadas con Recursos Humanos
+5;2;Donaciones;Cuestiones relacionadas con Donaciones Recibidas/En trámite
+6;2;Necesidades;Cuestiones relacionadas con Necesidades

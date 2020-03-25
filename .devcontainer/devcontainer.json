@@ -1,0 +1,63 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+  "name": "DIUCON",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  // Uncomment the next line if you want to publish any ports.
+  "appPort": [
+    8080,
+    9000
+  ],
+  // Uncomment the next line to run commands after the container is created.
+  // "postCreateCommand": "java -version",
+  "extensions": [
+    "vscjava.vscode-java-pack",
+    "atlassian.atlascode",
+    "esbenp.prettier-vscode",
+    "redhat.vscode-yaml",
+    "donjayamanne.git-extension-pack",
+    "mhutchie.git-graph",
+    "jhipster-ide.jdl",
+    "jebbs.plantuml",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "esbenp.prettier-vscode",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "coenraads.bracket-pair-colorizer",
+    "cyrilletuzi.angular-schematics",
+    "streetsidesoftware.code-spell-checker-spanish"
+  ],
+  "postCreateCommand": "sudo cp -r /root/.ssh-localhost /home/jhipster && sudo chown -R $(id -u):$(id -g) /home/jhipster/.ssh-localhost && mv /home/jhipster/.ssh-localhost /home/jhipster/.ssh && chmod 700 /home/jhipster/.ssh && chmod 600 /home/jhipster/.ssh/*",
+  // For Best performance according to https://www.jhipster.tech/configuring-ide-visual-studio-code/
+  "settings": {
+    // Configure glob patterns for excluding files and folders.
+    "files.exclude": {
+      "**/.git": true,
+      "**/.gradle": true,
+      "**/.idea": true,
+      "**/.mvn": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/.DS_Store": true
+    },
+    // Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the files.exclude setting.
+    "search.exclude": {
+      "**/node": true,
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/build": true,
+      "**/target": true
+    },
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 2,
+    "prettier.useTabs": false,
+    "cSpell.language": "en,es",
+    "plantuml.server": "https://plantuml.com/plantuml",
+    "plantuml.render": "PlantUMLServer"
+  }
+}

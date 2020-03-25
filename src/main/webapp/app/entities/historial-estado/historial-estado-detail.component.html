@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="historialEstado">
+            <h2><span jhiTranslate="diuconApp.historialEstado.detail.title">Historial Estado</span> {{ historialEstado.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="diuconApp.historialEstado.fecha">Fecha</span></dt>
+                <dd>
+                    <span>{{ historialEstado.fecha }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.historialEstado.estado">Estado</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'diuconApp.Estado.' + historialEstado.estado }}">{{ historialEstado.estado }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.historialEstado.usuario">Usuario</span></dt>
+                <dd>
+                    {{ historialEstado.usuarioLogin }}
+                </dd>
+                <dt><span jhiTranslate="diuconApp.historialEstado.incidente">Incidente</span></dt>
+                <dd>
+                    <div *ngIf="historialEstado.incidenteId">
+                        <a [routerLink]="['/incidente', historialEstado.incidenteId, 'view']">{{ historialEstado.incidenteId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/historial-estado', historialEstado.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

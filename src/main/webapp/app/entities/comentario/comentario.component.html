@@ -1,0 +1,71 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="diuconApp.comentario.home.title">Comentarios</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-comentario" [routerLink]="['/comentario/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="diuconApp.comentario.home.createLabel">
+            Create a new Comentario
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="comentarios?.length === 0">
+        <span jhiTranslate="diuconApp.comentario.home.notFound">No comentarios found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="comentarios?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span jhiTranslate="global.field.id">ID</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.comentario.cuerpo">Cuerpo</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.comentario.usuario">Usuario</span></th>
+                    <th scope="col" ><span jhiTranslate="diuconApp.comentario.incidente">Incidente</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let comentario of comentarios ;trackBy: trackId">
+                    <td><a [routerLink]="['/comentario', comentario.id, 'view']">{{ comentario.id }}</a></td>
+                    <td>{{ comentario.cuerpo }}</td>
+                    <td>
+                        {{ comentario.usuarioLogin }}
+                    </td>
+                    <td>
+                        <div *ngIf="comentario.incidenteId">
+                            <a [routerLink]="['/incidente', comentario.incidenteId , 'view']" >{{ comentario.incidenteId }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/comentario', comentario.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/comentario', comentario.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(comentario)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

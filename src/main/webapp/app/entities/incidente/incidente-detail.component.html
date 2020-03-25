@@ -1,0 +1,88 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="incidente">
+            <h2><span jhiTranslate="diuconApp.incidente.detail.title">Incidente</span> {{ incidente.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="diuconApp.incidente.fecha">Fecha</span></dt>
+                <dd>
+                    <span>{{ incidente.fecha }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.resumen">Resumen</span></dt>
+                <dd>
+                    <span>{{ incidente.resumen }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.descripcion">Descripcion</span></dt>
+                <dd>
+                    <span>{{ incidente.descripcion }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.estado">Estado</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'diuconApp.Estado.' + incidente.estado }}">{{ incidente.estado }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.localizacion">Localizacion</span></dt>
+                <dd>
+                    <span>{{ incidente.localizacion }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.latitud">Latitud</span></dt>
+                <dd>
+                    <span>{{ incidente.latitud }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.longitud">Longitud</span></dt>
+                <dd>
+                    <span>{{ incidente.longitud }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.fechaResolucion">Fecha Resolucion</span></dt>
+                <dd>
+                    <span>{{ incidente.fechaResolucion }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.fechaCierre">Fecha Cierre</span></dt>
+                <dd>
+                    <span>{{ incidente.fechaCierre }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.email">Email</span></dt>
+                <dd>
+                    <span>{{ incidente.email }}</span>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.categoria">Categoria</span></dt>
+                <dd>
+                    <div *ngIf="incidente.categoriaId">
+                        <a [routerLink]="['/categoria', incidente.categoriaId, 'view']">{{ incidente.categoriaNombre }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.subcategoria">Subcategoria</span></dt>
+                <dd>
+                    <div *ngIf="incidente.subcategoriaId">
+                        <a [routerLink]="['/sub-categoria', incidente.subcategoriaId, 'view']">{{ incidente.subcategoriaNombre }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.operador">Operador</span></dt>
+                <dd>
+                    {{ incidente.operadorLogin }}
+                </dd>
+                <dt><span jhiTranslate="diuconApp.incidente.responsable">Responsable</span></dt>
+                <dd>
+                    <div *ngIf="incidente.responsableId">
+                        <a [routerLink]="['/responsable', incidente.responsableId, 'view']">{{ incidente.responsableNombreCompleto }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/incidente', incidente.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
