@@ -8,6 +8,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "strict": true,
+    "strictPropertyInitialization": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "suppressImplicitAnyIndexErrors": true,
