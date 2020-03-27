@@ -1,5 +1,6 @@
+import { MapsAPILoader } from '@agm/core';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +24,8 @@ type SelectableEntity = ICategoria | ISubCategoria | IUser | IResponsable;
 
 @Component({
   selector: 'jhi-incidente-update',
-  templateUrl: './incidente-update.component.html'
+  templateUrl: './incidente-update.component.html',
+  styleUrls: ['./incidente-update.component.scss']
 })
 export class IncidenteUpdateComponent implements OnInit {
   isSaving = false;
@@ -50,6 +52,10 @@ export class IncidenteUpdateComponent implements OnInit {
     responsableId: []
   });
 
+  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
+  latitud: number | undefined;
+  longitud: number | undefined;
+
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
@@ -59,7 +65,9 @@ export class IncidenteUpdateComponent implements OnInit {
     protected userService: UserService,
     protected responsableService: ResponsableService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -80,10 +88,45 @@ export class IncidenteUpdateComponent implements OnInit {
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
 
       this.responsableService.query().subscribe((res: HttpResponse<IResponsable[]>) => (this.responsables = res.body || []));
+
+      // load Places Autocomplete
+      this.mapsAPILoader.load().then(() => {
+        const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ['address']
+        });
+        autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            // get the place result
+            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            // verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              this.latitud = undefined;
+              this.longitud = undefined;
+              this.editForm.patchValue({
+                latitud: this.latitud,
+                longitud: this.longitud
+              });
+              return;
+            }
+
+            // set latitude, longitude and zoom
+            this.latitud = place.geometry.location.lat();
+            this.longitud = place.geometry.location.lng();
+            this.editForm.patchValue({
+              localizacion: place.formatted_address,
+              latitud: this.latitud,
+              longitud: this.longitud
+            });
+          });
+        });
+      });
     });
   }
 
   updateForm(incidente: IIncidente): void {
+    this.latitud = incidente.latitud;
+    this.longitud = incidente.longitud;
     this.editForm.patchValue({
       id: incidente.id,
       fecha: incidente.fecha ? incidente.fecha.format(DATE_TIME_FORMAT) : null,

@@ -146,3 +146,9 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+######################
+# Environment files
+######################
+src/main/webapp/environment/*
+!src/main/webapp/environment/*.dist

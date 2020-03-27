@@ -1,160 +1,198 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-incidente-heading" jhiTranslate="diuconApp.incidente.home.createOrEditLabel">Create or edit a Incidente</h2>
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-incidente-heading" jhiTranslate="diuconApp.incidente.home.createOrEditLabel">Create or edit a Incidente</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+      <div>
+        <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
+        <div class="form-group" [hidden]="!editForm.get('id')!.value">
+          <label for="id" jhiTranslate="global.field.id">ID</label>
+          <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.fecha" for="field_fecha">Fecha</label>
-                    <div class="d-flex">
-                        <input id="field_fecha" type="datetime-local" class="form-control" name="fecha" formControlName="fecha" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                    <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('fecha')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('fecha')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.fecha" for="field_fecha">Fecha</label>
+          <div class="d-flex">
+            <input
+              id="field_fecha"
+              type="datetime-local"
+              class="form-control"
+              name="fecha"
+              formControlName="fecha"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fecha')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('fecha')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.resumen" for="field_resumen">Resumen</label>
-                    <input type="text" class="form-control" name="resumen" id="field_resumen"
-                           formControlName="resumen"/>
-                    <div *ngIf="editForm.get('resumen')!.invalid && (editForm.get('resumen')!.dirty || editForm.get('resumen')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('resumen')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.resumen" for="field_resumen">Resumen</label>
+          <input type="text" class="form-control" name="resumen" id="field_resumen" formControlName="resumen" />
+          <div *ngIf="editForm.get('resumen')!.invalid && (editForm.get('resumen')!.dirty || editForm.get('resumen')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('resumen')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.descripcion" for="field_descripcion">Descripcion</label>
-                    <textarea class="form-control" name="descripcion" id="field_descripcion"
-                              formControlName="descripcion"></textarea>
-                    <div *ngIf="editForm.get('descripcion')!.invalid && (editForm.get('descripcion')!.dirty || editForm.get('descripcion')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('descripcion')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.descripcion" for="field_descripcion">Descripcion</label>
+          <textarea class="form-control" name="descripcion" id="field_descripcion" formControlName="descripcion"></textarea>
+          <div *ngIf="editForm.get('descripcion')!.invalid && (editForm.get('descripcion')!.dirty || editForm.get('descripcion')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descripcion')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.estado" for="field_estado">Estado</label>
-                    <select class="form-control" name="estado" formControlName="estado" id="field_estado">
-                        <option value="CREADA">{{ 'diuconApp.Estado.CREADA' | translate }}</option>
-                        <option value="ASIGNADA">{{ 'diuconApp.Estado.ASIGNADA' | translate }}</option>
-                        <option value="EN_CURSO">{{ 'diuconApp.Estado.EN_CURSO' | translate }}</option>
-                        <option value="RESUELTA">{{ 'diuconApp.Estado.RESUELTA' | translate }}</option>
-                        <option value="CERRADA">{{ 'diuconApp.Estado.CERRADA' | translate }}</option>
-                    </select>
-                    <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.estado" for="field_estado">Estado</label>
+          <select class="form-control" name="estado" formControlName="estado" id="field_estado">
+            <option value="CREADA">{{ 'diuconApp.Estado.CREADA' | translate }}</option>
+            <option value="ASIGNADA">{{ 'diuconApp.Estado.ASIGNADA' | translate }}</option>
+            <option value="EN_CURSO">{{ 'diuconApp.Estado.EN_CURSO' | translate }}</option>
+            <option value="RESUELTA">{{ 'diuconApp.Estado.RESUELTA' | translate }}</option>
+            <option value="CERRADA">{{ 'diuconApp.Estado.CERRADA' | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.localizacion" for="field_localizacion">Localizacion</label>
-                    <input type="text" class="form-control" name="localizacion" id="field_localizacion"
-                           formControlName="localizacion"/>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.localizacion" for="field_localizacion">Localizacion</label>
+          <input type="text" class="form-control" name="localizacion" id="field_localizacion" formControlName="localizacion" #search />
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.latitud" for="field_latitud">Latitud</label>
-                    <input type="number" class="form-control" name="latitud" id="field_latitud"
-                           formControlName="latitud"/>
-                </div>
+        <agm-map [latitude]="latitud" [longitude]="longitud" [zoom]="16" [hidden]="!latitud" #map>
+          <agm-marker *ngIf="latitud" [latitude]="latitud" [longitude]="longitud" draggable="false"></agm-marker>
+        </agm-map>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.longitud" for="field_longitud">Longitud</label>
-                    <input type="number" class="form-control" name="longitud" id="field_longitud"
-                           formControlName="longitud"/>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.latitud" for="field_latitud">Latitud</label>
+          <input type="number" class="form-control" name="latitud" id="field_latitud" formControlName="latitud" />
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaResolucion" for="field_fechaResolucion">Fecha Resolucion</label>
-                    <div class="d-flex">
-                        <input id="field_fechaResolucion" type="datetime-local" class="form-control" name="fechaResolucion" formControlName="fechaResolucion" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.longitud" for="field_longitud">Longitud</label>
+          <input type="number" class="form-control" name="longitud" id="field_longitud" formControlName="longitud" />
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaCierre" for="field_fechaCierre">Fecha Cierre</label>
-                    <div class="d-flex">
-                        <input id="field_fechaCierre" type="datetime-local" class="form-control" name="fechaCierre" formControlName="fechaCierre" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaResolucion" for="field_fechaResolucion"
+            >Fecha Resolucion</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_fechaResolucion"
+              type="datetime-local"
+              class="form-control"
+              name="fechaResolucion"
+              formControlName="fechaResolucion"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.email" for="field_email">Email</label>
-                    <input type="text" class="form-control" name="email" id="field_email"
-                           formControlName="email"/>
-                    <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('email')?.errors?.pattern" jhiTranslate="entity.validation.pattern" [translateValues]="{ pattern: 'Email' }">
-                            This field should follow pattern for "Email".
-                        </small>
-                    </div>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.fechaCierre" for="field_fechaCierre">Fecha Cierre</label>
+          <div class="d-flex">
+            <input
+              id="field_fechaCierre"
+              type="datetime-local"
+              class="form-control"
+              name="fechaCierre"
+              formControlName="fechaCierre"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.categoria" for="field_categoria">Categoria</label>
-                    <select class="form-control" id="field_categoria" name="categoria" formControlName="categoriaId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="categoriaOption.id" *ngFor="let categoriaOption of categorias; trackBy: trackById">{{ categoriaOption.nombre }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('email')?.errors?.pattern"
+              jhiTranslate="entity.validation.pattern"
+              [translateValues]="{ pattern: 'Email' }"
+            >
+              This field should follow pattern for "Email".
+            </small>
+          </div>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.subcategoria" for="field_subcategoria">Subcategoria</label>
-                    <select class="form-control" id="field_subcategoria" name="subcategoria" formControlName="subcategoriaId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="subCategoriaOption.id" *ngFor="let subCategoriaOption of subcategorias; trackBy: trackById">{{ subCategoriaOption.nombre }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.categoria" for="field_categoria">Categoria</label>
+          <select class="form-control" id="field_categoria" name="categoria" formControlName="categoriaId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="categoriaOption.id" *ngFor="let categoriaOption of categorias; trackBy: trackById">{{
+              categoriaOption.nombre
+            }}</option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.operador" for="field_operador">Operador</label>
-                    <select class="form-control" id="field_operador" name="operador" formControlName="operadorId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
-                    </select>
-                </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.subcategoria" for="field_subcategoria">Subcategoria</label>
+          <select class="form-control" id="field_subcategoria" name="subcategoria" formControlName="subcategoriaId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="subCategoriaOption.id" *ngFor="let subCategoriaOption of subcategorias; trackBy: trackById">{{
+              subCategoriaOption.nombre
+            }}</option>
+          </select>
+        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="diuconApp.incidente.responsable" for="field_responsable">Responsable</label>
-                    <select class="form-control" id="field_responsable" name="responsable" formControlName="responsableId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="responsableOption.id" *ngFor="let responsableOption of responsables; trackBy: trackById">{{ responsableOption.nombreCompleto }}</option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.operador" for="field_operador">Operador</label>
+          <select class="form-control" id="field_operador" name="operador" formControlName="operadorId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+          </select>
+        </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="diuconApp.incidente.responsable" for="field_responsable">Responsable</label>
+          <select class="form-control" id="field_responsable" name="responsable" formControlName="responsableId">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="responsableOption.id" *ngFor="let responsableOption of responsables; trackBy: trackById">{{
+              responsableOption.nombreCompleto
+            }}</option>
+          </select>
+        </div>
+      </div>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-            </div>
-        </form>
-    </div>
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -87,6 +87,17 @@ will generate few files:
     create src/main/webapp/app/my-component/my-component.component.ts
     update src/main/webapp/app/app.module.ts
 
+### Google Maps
+
+You need a Google Map API key to use address autocompletion and to put markers on map. To do so, follow the next steps:
+
+1. Sing in into the [Google Cloud Console](https://console.cloud.google.com)
+2. Select or create a new Project
+3. Enable the **Maps JavaScript API**
+4. Go to _Credentials_ section
+5. Create a new _API Credential_
+6. Paste new API into _apiKey_ variable in [src/webapp/environment/environment.ts](src/webapp/environment/environment.ts) or [src/webapp/environment/environment.prod.ts](src/webapp/environment/environment.prod.ts)
+
 ## Building for production
 
 ### Packaging as jar

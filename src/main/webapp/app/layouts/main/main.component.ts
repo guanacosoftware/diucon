@@ -1,9 +1,9 @@
-import { Component, OnInit, RendererFactory2, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-
+import { ActivatedRouteSnapshot, NavigationEnd, NavigationError, Router } from '@angular/router';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { AccountService } from 'app/core/auth/account.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'jhi-main',
@@ -23,6 +23,9 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // eslint-disable-next-line no-console
+    console.log('Running in production', environment.production); // Logs false for default environment
+
     // try to log in automatically
     this.accountService.identity().subscribe();
 
