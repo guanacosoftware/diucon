@@ -25,7 +25,18 @@ export class RegisterComponent implements AfterViewInit {
     login: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*$')]],
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]]
+    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    telefono: [null, [Validators.required]],
+    fechaNacimiento: [],
+    dni: [null, [Validators.min(0), Validators.max(99999999)]],
+    domicilio: [null, [Validators.required]],
+    latitud: [],
+    longitud: [],
+    profesional: [],
+    estudiante: [],
+    trabajador: [],
+    usuarioId: [],
+    subcategorias: []
   });
 
   constructor(
