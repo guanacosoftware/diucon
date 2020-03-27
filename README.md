@@ -93,7 +93,7 @@ You need a Google Map API key to use address autocompletion and to put markers o
 
 1. Sing in into the [Google Cloud Console](https://console.cloud.google.com)
 2. Select or create a new Project
-3. Enable the **Maps JavaScript API**
+3. Enable the **Maps JavaScript API** and the **Places API**
 4. Go to _Credentials_ section
 5. Create a new _API Credential_
 6. Paste new API into _apiKey_ variable in [src/webapp/environment/environment.ts](src/webapp/environment/environment.ts) or [src/webapp/environment/environment.prod.ts](src/webapp/environment/environment.prod.ts)

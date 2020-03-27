@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
-import { IResponsable, Responsable } from 'app/shared/model/responsable.model';
-import { ResponsableService } from './responsable.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
-import { ISubCategoria } from 'app/shared/model/sub-categoria.model';
 import { SubCategoriaService } from 'app/entities/sub-categoria/sub-categoria.service';
+import { IResponsable, Responsable } from 'app/shared/model/responsable.model';
+import { ISubCategoria } from 'app/shared/model/sub-categoria.model';
+import { Observable } from 'rxjs';
+import { ResponsableService } from './responsable.service';
 
 type SelectableEntity = IUser | ISubCategoria;
 
 @Component({
   selector: 'jhi-responsable-update',
-  templateUrl: './responsable-update.component.html'
+  templateUrl: './responsable-update.component.html',
+  styleUrls: ['./responsable-update.component.scss']
 })
 export class ResponsableUpdateComponent implements OnInit {
   isSaving = false;
@@ -40,12 +41,18 @@ export class ResponsableUpdateComponent implements OnInit {
     subcategorias: []
   });
 
+  @ViewChild('search', { static: false }) public searchElementRef: ElementRef;
+  latitud: number | undefined;
+  longitud: number | undefined;
+
   constructor(
     protected responsableService: ResponsableService,
     protected userService: UserService,
     protected subCategoriaService: SubCategoriaService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +62,39 @@ export class ResponsableUpdateComponent implements OnInit {
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
 
       this.subCategoriaService.query().subscribe((res: HttpResponse<ISubCategoria[]>) => (this.subcategorias = res.body || []));
+
+      // load Places Autocomplete
+      this.mapsAPILoader.load().then(() => {
+        const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ['address']
+        });
+        autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => {
+            // get the place result
+            const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            // verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              this.latitud = undefined;
+              this.longitud = undefined;
+              this.editForm.patchValue({
+                latitud: this.latitud,
+                longitud: this.longitud
+              });
+              return;
+            }
+
+            // set latitude, longitude and zoom
+            this.latitud = place.geometry.location.lat();
+            this.longitud = place.geometry.location.lng();
+            this.editForm.patchValue({
+              domicilio: place.formatted_address,
+              latitud: this.latitud,
+              longitud: this.longitud
+            });
+          });
+        });
+      });
     });
   }
 
